@@ -1,0 +1,213 @@
+Received: from brn-cust-smtp1.sa.cz (brn-cust-smtp1.sa.cz [217.66.178.190])
+	by email-smtpd-v3.ng.seznam.cz (Seznam SMTPD 1.3.12) with ESMTP;
+	Thu, 04 Feb 2016 12:21:38 +0100 (CET)  
+Received: from localhost (localhost [127.0.0.1])
+	by brn-cust-smtp1.sa.cz (Postfix) with ESMTP id D7CD834016E
+	for <ocenas.martin@seznam.cz>; Thu,  4 Feb 2016 12:21:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=studentagency.cz;
+	s=cmail; t=1454584897;
+	bh=9YvnR2elglu1AjyZPD/KW7s5a4WMQ4m1wseu48Ii8+I=;
+	h=Date:From:To:Subject:From;
+	b=HiXEaB9/Eb2lyCky7t2ByFcrtuw4eCPJ8Lcfvb5i9k5C7S5iC1ik5bTlSgQEDRK9u
+	 Iyb5hus67y1XOaR5nQ4jbUIvFG2cyhfXW87CB5zUPIU1/OKHYwNts/qHa4S1fXn617
+	 M2MtveC4dTnDxkfQO31h62DOUfF0MvM3jxEopzaY=
+X-Virus-Scanned: Debian amavisd-new at brn-cust-smtp1.sa.cz
+Received: from brn-cust-smtp1.sa.cz ([127.0.0.1])
+	by localhost (brn-cust-smtp1.sa.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id y9_4SqruZvaE for <ocenas.martin@seznam.cz>;
+	Thu,  4 Feb 2016 12:21:34 +0100 (CET)
+Received: from brn-ybus-online.sa.cz (brn-ybus-online.sa.cz [217.66.178.228])
+	(using TLSv1 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by brn-cust-smtp1.sa.cz (Postfix) with ESMTPSA id F24DE34034A
+	for <ocenas.martin@seznam.cz>; Thu,  4 Feb 2016 12:21:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=studentagency.cz;
+	s=cmail; t=1454584893;
+	bh=9YvnR2elglu1AjyZPD/KW7s5a4WMQ4m1wseu48Ii8+I=;
+	h=Date:From:To:Subject:From;
+	b=flW7IaaaELywWVWQhlNhYcPHTXkPnKUUg29gXV/mz+3hNF3IWZz2TdBZ4+vkqlgce
+	 seiMMNT/wQeKBq0ZAhJDONSZSUXEgNN3lCHbw2BmOHpGgzuVZ6p5WpmnhWZ8fR3iur
+	 QuTUQPkNYbaHYU9atmfqnEgMdezoWIcBnJ9YU43Y=
+Date: Thu, 4 Feb 2016 12:21:33 +0100 (CET)
+From: express@studentagency.cz
+To: ocenas.martin@seznam.cz
+Message-ID: <1927278496.200845.1454584893989.JavaMail.tomcat@brn-ybus-online.sa.cz>
+Subject: =?UTF-8?Q?STUDENT_AGENCY/REGIOJET:_Dotazn=C3=ADk_spokojenosti?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_200842_619322077.1454584893929"
+
+------=_Part_200842_619322077.1454584893929
+Content-Type: multipart/related; 
+	boundary="----=_Part_200843_527288494.1454584893929"
+
+------=_Part_200843_527288494.1454584893929
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_200844_66633943.1454584893929"
+
+------=_Part_200844_66633943.1454584893929
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+TOTO JE AUTOMATICKY ROZES=C3=8DLAN=C3=9D E-MAIL, PROS=C3=8DM, NEODPOV=C3=8D=
+DEJTE, K HODNOCEN=C3=8D CESTY POU=C5=BDIJTE PROKLIK N=C3=8D=C5=BDE
+
+Dobr=C3=BD den,
+d=C4=9Bkujeme V=C3=A1m za vyu=C5=BEit=C3=AD na=C5=A1ich slu=C5=BEeb.
+Jsme r=C3=A1di, =C5=BEe cestujete s n=C3=A1mi.
+Abychom mohli na=C5=A1e slu=C5=BEby je=C5=A1t=C4=9B v=C3=ADce vylep=C5=A1it=
+, sd=C4=9Blte n=C3=A1m pros=C3=ADm Va=C5=A1e m=C3=ADn=C4=9Bn=C3=AD o realiz=
+ovan=C3=A9 cest=C4=9B.
+
+D=C4=9Bkujeme V=C3=A1m za V=C3=A1=C5=A1 n=C3=A1zor.
+
+Tato mo=C5=BEnost je dostupn=C3=A1 na n=C3=A1sleduj=C3=ADc=C3=ADm odkaze:
+https://jizdenky.studentagency.cz/Survey?pam1=3D2585924441&pam2=3D689096470=
+891274
+
+Pokud pou=C5=BE=C3=ADv=C3=A1te Va=C5=A1i j=C3=ADzdenku opakovan=C4=9B, po a=
+bsolvov=C3=A1n=C3=AD dal=C5=A1=C3=AD cesty m=C5=AF=C5=BEete hodnotit kvalit=
+u slu=C5=BEeb na www.studentagency.cz=20
+po p=C5=99ihl=C3=A1=C5=A1en=C3=AD na Va=C5=A1i j=C3=ADzdenku v sekci Seznam=
+ rezervac=C3=AD, proklik Ohodnocen=C3=AD cesty. Budeme za to r=C3=A1di.
+
+Cesta
+
+Datum         Zast=C3=A1vka/P=C5=99estup           P=C5=99=C3=ADjezd   Odje=
+zd    N=C3=A1st.     Spoj                          V=C5=AFz/Sedadla      =
+=20
+=C4=8Ct 4.2.16     Brno, AN u hotelu Grand              12:00     9, 2. =C5=
+=99ad Brno =E2=86=92 =C4=8Cesk=C3=A9 Bud=C4=9Bjovice (SA)  45              =
+ =20
+              Tel=C4=8D, AN                   13:55                        =
+                                                =20
+
+
+S pozdravem
+STUDENT AGENCY/ REGIOJET
+www.studentagency.cz, www.regiojet.cz
+tel: +420 841 101 101, +420 542 42 42 42
+
+---------------------------------------------------------------------------=
+-----
+D=C4=9Bkujeme, =C5=BEe pou=C5=BE=C3=ADv=C3=A1te online rezerva=C4=8Dn=C3=AD=
+ syst=C3=A9m autobusov=C3=A9 a vlakov=C3=A9 dopravy spole=C4=8Dnost=C3=AD S=
+TUDENT AGENCY a REGIOJET (http://www.studentagency.cz; http://www.regiojet.=
+cz).
+Pokud nechcete automaticky dost=C3=A1vat emaily, prove=C4=8Fte zm=C4=9Bnu v=
+ sekci nastaven=C3=AD.
+
+
+
+------=_Part_200844_66633943.1454584893929
+Content-Type: text/html;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head><META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; charset=3DUTF=
+-8"></head>
+<body>
+<div style=3D"font-size: 14px; font-family: lucida, sans-serif">
+<b>TOTO JE AUTOMATICKY ROZES=C3=8DLAN=C3=9D E-MAIL, PROS=C3=8DM, NEODPOV=C3=
+=8DDEJTE, K HODNOCEN=C3=8D CESTY POU=C5=BDIJTE PROKLIK N=C3=8D=C5=BDE</b><b=
+r/><br/>
+
+
+OHODNO=C5=A4TE PROS=C3=8DM PR=C3=81CI POS=C3=81DKY A HRAJTE O KREDIT 10 x 5=
+ 000 K=C4=8D KA=C5=BDD=C3=9D M=C4=9AS=C3=8DC <br/>
+<br/>
+Dobr=C3=BD den, <br/>
+kvalitn=C3=AD servis je hlavn=C4=9B o lidech. Pomozte n=C3=A1m zv=C3=BD=C5=
+=A1it kvalitu na=C5=A1ich stevard=C5=AF/stevardek vypln=C4=9Bn=C3=ADm kr=C3=
+=A1tk=C3=A9ho 30 sekundov=C3=A9ho dotazn=C3=ADku. Zapracujeme na slab=C3=BD=
+ch =C4=8Dlenech pos=C3=A1dky a naopak odm=C4=9Bn=C3=ADme sna=C5=BEiv=C3=A9.=
+ <br/>
+<br/>
+Za va=C5=A1i pomoc odm=C4=9Bn=C3=ADme i v=C3=A1s. Ka=C5=BEd=C3=BD m=C4=9Bs=
+=C3=ADc losujeme 10 dotazn=C3=ADk=C5=AF, jejich=C5=BE auto=C5=99i z=C3=ADsk=
+aj=C3=AD kredit 5 000 K=C4=8D.
+<br/>
+<br/>
+Tato mo=C5=BEnost je dostupn=C3=A1 na n=C3=A1sleduj=C3=ADc=C3=ADm odkaze:<b=
+r/><a href=3D"https://jizdenky.studentagency.cz/Survey?pam1=3D2585924441&pa=
+m2=3D689096470891274">https://jizdenky.studentagency.cz/Survey?pam1=3D25859=
+24441&pam2=3D689096470891274</a>
+<br/><br/>
+
+<br/>
+D=C4=9Bkujeme V=C3=A1m za vyu=C5=BEit=C3=AD na=C5=A1ich slu=C5=BEeb. <br/>
+<br/>
+V=C3=ADce o sout=C4=9B=C5=BEi <a target=3D"_blank" href=3D"https://jizdenky=
+.studentagency.cz/web/novinky/podstranky-novinky/student-agency-odmena-5000=
+-kc.html?1">zde</a>.
+<br/>
+S pozdravem <br/>
+<br/>
+Radim Jan=C4=8Dura <br/>
+=C5=99editel <br/>
+STUDENT AGENCY/ REGIOJET <br/>
+
+Pokud pou=C5=BE=C3=ADv=C3=A1te Va=C5=A1i j=C3=ADzdenku opakovan=C4=9B, po a=
+bsolvov=C3=A1n=C3=AD dal=C5=A1=C3=AD cesty m=C5=AF=C5=BEete hodnotit kvalit=
+u slu=C5=BEeb na www.studentagency.cz <br/>
+po p=C5=99ihl=C3=A1=C5=A1en=C3=AD na Va=C5=A1i j=C3=ADzdenku v sekci Seznam=
+ rezervac=C3=AD, proklik Ohodnocen=C3=AD cesty. Budeme za to r=C3=A1di. <br=
+/> <br/>
+<h2 style=3D"margin: .5em 0 .2em; font-size: 1.5em; display: block; font-we=
+ight: bold;">Cesta
+</h2>
+<table style=3D"border-collapse: collapse;">
+<tr>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">Datum</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">Zast=C3=A1vka/P=C5=99estup</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">P=C5=99=C3=ADjezd</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">Odjezd</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">N=C3=A1st.</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">Spoj</th>
+    <th style=3D"text-align:left;padding:.2em 1em 0;border-bottom:1px solid=
+ black;">V=C5=AFz/Sedadla</th>
+</tr>
+<tr><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0;">=C4=
+=8Ct 4.2.16</td><td style=3D"font-size: 14px; text-align:left;padding:.2em =
+1em 0;">Brno, AN u hotelu Grand</td><td style=3D"font-size: 14px; text-alig=
+n:left;padding:.2em 1em 0;"></td><td style=3D"font-size: 14px; text-align:l=
+eft;padding:.2em 1em 0;">12:00</td><td style=3D"font-size: 14px; text-align=
+:left;padding:.2em 1em 0;">9, 2. =C5=99ada</td><td style=3D"font-size: 14px=
+; text-align:left;padding:.2em 1em 0;">Brno =E2=86=92 =C4=8Cesk=C3=A9 Bud=
+=C4=9Bjovice (SA)</td><td style=3D"font-size: 14px; text-align:left;padding=
+:.2em 1em 0;">45</td></tr>
+<tr><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0;"></td=
+><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0;">Tel=C4=
+=8D, AN</td><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em =
+0;">13:55</td><td style=3D"font-size: 14px; text-align:left;padding:.2em 1e=
+m 0;"></td><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0=
+;"></td><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0;">=
+</td><td style=3D"font-size: 14px; text-align:left;padding:.2em 1em 0;"></t=
+d></tr>
+=20
+</table><br/>
+<br>S pozdravem<br>STUDENT AGENCY/ REGIOJET<br>www.studentagency.cz, www.re=
+giojet.cz<br>tel: +420 841 101 101, +420 542 42 42 42<br>
+<br><hr>D=C4=9Bkujeme, =C5=BEe pou=C5=BE=C3=ADv=C3=A1te <b><a href=3D"https=
+://jizdenky.studentagency.cz/">online rezerva=C4=8Dn=C3=AD syst=C3=A9m</a><=
+/b> =20
+ autobusov=C3=A9 a vlakov=C3=A9 dopravy spole=C4=8Dnost=C3=AD <a href=3D"ht=
+tp://www.studentagency.cz">STUDENT AGENCY</a> a <a href=3D"http://www.regio=
+jet.cz">REGIOJET</a>.<br/>
+ Pokud nechcete automaticky dost=C3=A1vat emaily, prove=C4=8Fte zm=C4=9Bnu =
+v sekci <a href=3D"https://jizdenky.studentagency.cz/Settings">nastaven=C3=
+=AD</a>.
+<br/>
+</div>
+</body></html>
+------=_Part_200844_66633943.1454584893929--
+
+------=_Part_200843_527288494.1454584893929--
+
+------=_Part_200842_619322077.1454584893929--
