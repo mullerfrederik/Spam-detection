@@ -10,6 +10,10 @@ import nltk
 from nltk.tokenize import word_tokenize
 import re
 import porter
+import random
+from nltk import NaiveBayesClassifier
+from email.header import decode_header
+import pickle
 
 def emailsToAnalyze():
 
@@ -17,7 +21,7 @@ def emailsToAnalyze():
 
     if len (sys.argv) != 2:
         print ('Usage: ./antispam email.eml email2.eml email3.eml email4.eml"')
-        sys.exit (1)
+        sys.exit(1)
 
     for email in sys.argv[1:]:
         emails.append(email)
@@ -30,8 +34,6 @@ def parseEmails(emails):
 
     for mail in emails:
 
-        print(mail)
-
         if ".DS_Store" in mail: 
             continue
 
@@ -39,14 +41,16 @@ def parseEmails(emails):
             with open(mail, 'r', encoding="latin2") as file:
                 raw_email = file.read()
         except OSError:
-            print('Cannot read file')
-            sys.exit (1)
+            parsedEmails.append({mail: None})
+            continue
 
         message = email.message_from_string(raw_email)
 
         subject = message["Subject"]
         if subject is None:
             subject = ""
+        if type(subject) != str:
+            subject = decode_header(subject)[0][0].decode('latin2')
 
         body = ""
 
@@ -55,7 +59,7 @@ def parseEmails(emails):
                 ctype = part.get_content_type()
                 cdispo = str(part.get('Content-Disposition'))
                 if ctype == 'text/plain' and 'attachment' not in cdispo:
-                    body = part.get_payload(decode=True).decode("latin2") 
+                    body = part.get_payload(decode=True).decode("latin2")
                     break
         else:
             body = message.get_payload(decode=True).decode("latin2") 
@@ -69,7 +73,7 @@ def parseEmails(emails):
 
     return parsedEmails
 
-def create_word_features(words):
+def createWordFeatures(words):
     my_dict = dict( [ (word, True) for word in words] )
     return my_dict
 
@@ -104,7 +108,7 @@ def prepareForBoyson(emails, string):
     for mail in emails:
         for mailLocation, message in mail.items():
             words = word_tokenize(normalize(message))
-            emailList.append((create_word_features(words), string))
+            emailList.append((createWordFeatures(words), string))
 
     return emailList
 
@@ -117,22 +121,68 @@ def trainData():
 
     spamEmailsFiles = getAllEmails('examples/spam/')
     parsedSpamEmails = parseEmails(spamEmailsFiles)
-    spamList = prepareForBoyson(parsedHamEmails, "spam")
+    spamList = prepareForBoyson(parsedSpamEmails, "spam")
 
-    print(hamList)
-    print(spamList)
+    combinedList = hamList + spamList
+
+    random.shuffle(combinedList)
+
+
+    # trainingPart = int(len(combinedList) * .7)
+
+    trainingSet = combinedList # trainingSet = combinedList[:trainingPart]
+
+    # testSet = combinedList[trainingPart:]
+
+    # print (len(trainingSet))
+    # print (len(testSet))
+
+    classifier = NaiveBayesClassifier.train(trainingSet)
+
+    # accuracy = nltk.classify.util.accuracy(classifier, testSet)
+
+    # print("Accuracy is: ", accuracy * 100)
+
+    classifier.show_most_informative_features(20)
+
+    model = open('my_classifier.pickle', 'wb')
+    pickle.dump(classifier, model)
+    model.close()
+
+def categorize(probabilities):
+    print(probabilities)
+    print(probabilities.samples())
+    print('ham: ' + str(probabilities.prob('ham')))
+    print('spam: ' + str(probabilities.prob('spam')))
+    if probabilities.prob('spam') > 0.95:
+        return 'SPAM'
+    else:
+        return 'OK'
 
 def main():
 
     trainData()
+
+    exit(0)
+
+    model = open('my_classifier.pickle', 'rb')
+    classifier = pickle.load(model)
+    model.close()
     
-    # parsedEmails = parseEmails(emails)
+    emailsFiles = emailsToAnalyze()
 
-    # for parsedEmail in parsedEmails:
+    parsedEmails = parseEmails(emailsFiles)
 
-    #     for mailLocation, message in parsedEmail.items():
-    #         print(mailLocation)
-    #         print(message)
+    for parsedEmail in parsedEmails:
+
+        for mailLocation, message in parsedEmail.items():
+            if message is None:
+                print(mailLocation + " - FAIL")
+                continue
+            words = word_tokenize(normalize(message))
+            features = createWordFeatures(words)
+            print(mailLocation + " - " + categorize(classifier.prob_classify(features)))
+
 
 if __name__ == "__main__":
     main()
