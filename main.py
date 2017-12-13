@@ -38,19 +38,35 @@ def parseEmails(emails):
             continue
 
         try:
-            with open(mail, 'r', encoding="latin2") as file:
+            with open(mail, 'r', encoding="latin-1") as file:
                 raw_email = file.read()
         except OSError:
             parsedEmails.append({mail: None})
             continue
 
+        suplementarCharset = ""
         message = email.message_from_string(raw_email)
+        if 'charset="iso-8859-2"' in message['Content-Type']:
+            charset = 'iso-8859-2'
+            suplementarCharset = 'utf-8'
+        elif 'charset=UTF-8' in message['Content-Type']:
+            charset = 'utf-8'
+            suplementarCharset = 'iso-8859-2'
+        else:
+            charset = 'utf-8'
+            suplementarCharset = 'iso-8859-2'
 
         subject = message["Subject"]
         if subject is None:
             subject = ""
-        if type(subject) != str:
-            subject = decode_header(subject)[0][0].decode('latin2')
+        else:
+            try:
+                subject = decode_header(subject)[0][0].decode(charset)
+            except:
+                try:
+                    subject = decode_header(subject)[0][0].decode(suplementarCharset)
+                except:
+                    subject = decode_header(subject)[0][0]
 
         body = ""
 
@@ -59,17 +75,27 @@ def parseEmails(emails):
                 ctype = part.get_content_type()
                 cdispo = str(part.get('Content-Disposition'))
                 if ctype == 'text/plain' and 'attachment' not in cdispo:
-                    body = part.get_payload(decode=True).decode("latin2")
+                    try:
+                        body = part.get_payload(decode=True).decode(charset)
+                    except:
+                        body = part.get_payload(decode=True).decode(suplementarCharset)
                     break
         else:
-            body = message.get_payload(decode=True).decode("latin2") 
+            try:
+                body = message.get_payload(decode=True).decode(charset)
+            except:
+                body = message.get_payload(decode=True).decode(suplementarCharset)
 
+        # move to normalize?
         text_maker = html2text.HTML2Text()
+        text_maker.single_line_break = True
         text_maker.ignore_links = True
+        text_maker.body_width = 0
         text_maker.ignore_images = True
+        text_maker.ignore_emphasis = True
         bodyText = text_maker.handle(body)
 
-        parsedEmails.append({mail: subject + "\n" + bodyText})
+        parsedEmails.append({mail: subject + " " + bodyText})
 
     return parsedEmails
 
@@ -87,19 +113,18 @@ def getAllEmails(directory):
     return filesPath
 
 
-stop_words = nltk.corpus.stopwords.words('english')
-porter = nltk.PorterStemmer()
-# Normalization http://inmachineswetrust.com/posts/sms-spam-filter/
 def normalize(string):
-    normalized = re.sub(r'\b[\w\-.]+?@\w+?\.\w{2,4}\b', 'emailaddr', string)
+    normalized = re.sub(r'\{.*?\}', '', string)
+    normalized = re.sub(r'[?\n\.!,():"]', '', normalized)
+    normalized = re.sub(r'\b[\w\-.]+?@\w+?\.\w{2,4}\b', 'emailaddr', normalized)
     normalized = re.sub(r'(http[s]?\S+)|(\w+\.[A-Za-z]{2,4}\S*)', 'httpaddr', normalized)
     normalized = re.sub(r'£|\$', 'moneysymb', normalized)
     normalized = re.sub(r'\b(\+\d{1,2}\s)?\d?[\-(.]?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', 'phonenumbr', normalized)
     normalized = re.sub(r'\d+(\.\d+)?', 'numbr', normalized)
-    normalized = re.sub(r'[^\w\d\s]', ' ', normalized)
     normalized = re.sub(r'\s+', ' ', normalized)
     normalized = re.sub(r'^\s+|\s+?$', '', normalized.lower())
-    return ' '.join(porter.stem(term) for term in normalized.split() if term not in set(stop_words))
+    normalized = normalized.replace('``', '')
+    return normalized
 
 def prepareForBoyson(emails, string):
 
@@ -119,13 +144,13 @@ def trainData():
     parsedHamEmails = parseEmails(hamEmailsFiles)
     hamList = prepareForBoyson(parsedHamEmails, "ham")
 
+
     spamEmailsFiles = getAllEmails('examples/spam/')
     parsedSpamEmails = parseEmails(spamEmailsFiles)
     spamList = prepareForBoyson(parsedSpamEmails, "spam")
-
     combinedList = hamList + spamList
 
-    random.shuffle(combinedList)
+    # random.shuffle(combinedList)
 
 
     # trainingPart = int(len(combinedList) * .7)
@@ -173,6 +198,7 @@ def main():
 
     parsedEmails = parseEmails(emailsFiles)
 
+
     for parsedEmail in parsedEmails:
 
         for mailLocation, message in parsedEmail.items():
@@ -180,6 +206,7 @@ def main():
                 print(mailLocation + " - FAIL")
                 continue
             words = word_tokenize(normalize(message))
+            print(words)
             features = createWordFeatures(words)
             print(mailLocation + " - " + categorize(classifier.prob_classify(features)))
 
