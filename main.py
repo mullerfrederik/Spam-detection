@@ -23,8 +23,8 @@ def emailsToAnalyze():
         print ('Usage: ./antispam email.eml email2.eml email3.eml email4.eml"')
         sys.exit(1)
 
-    for email in sys.argv[1:]:
-        emails.append(email)
+    for mail in sys.argv[1:]:
+        emails.append(mail)
 
     return emails
 
@@ -33,6 +33,8 @@ def parseEmails(emails):
     parsedEmails = []
 
     for mail in emails:
+
+        print(mail)
 
         if ".DS_Store" in mail: 
             continue
@@ -46,7 +48,10 @@ def parseEmails(emails):
 
         suplementarCharset = ""
         message = email.message_from_string(raw_email)
-        if 'charset="iso-8859-2"' in message['Content-Type']:
+        if message['Content-Type'] is None:
+            charset = 'iso-8859-2'
+            suplementarCharset = 'utf-8'
+        elif 'charset="iso-8859-2"' in message['Content-Type']:
             charset = 'iso-8859-2'
             suplementarCharset = 'utf-8'
         elif 'charset=UTF-8' in message['Content-Type']:
@@ -140,12 +145,12 @@ def prepareForBoyson(emails, string):
 
 def trainData():
 
-    hamEmailsFiles = getAllEmails('examples/ham/')
+    hamEmailsFiles = getAllEmails('email_database/ham/')
     parsedHamEmails = parseEmails(hamEmailsFiles)
     hamList = prepareForBoyson(parsedHamEmails, "ham")
 
 
-    spamEmailsFiles = getAllEmails('examples/spam/')
+    spamEmailsFiles = getAllEmails('email_database/spam/')
     parsedSpamEmails = parseEmails(spamEmailsFiles)
     spamList = prepareForBoyson(parsedSpamEmails, "spam")
     combinedList = hamList + spamList
@@ -186,9 +191,9 @@ def categorize(probabilities):
 
 def main():
 
-    trainData()
+    # trainData()
 
-    exit(0)
+    # exit(0)
 
     model = open('my_classifier.pickle', 'rb')
     classifier = pickle.load(model)
