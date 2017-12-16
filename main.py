@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Frederik Muller 
+# FIT VUT Brno
+# Projekt BIS 
+# Antispam -- machine learning
 
 import sys
 import simplejson as json
@@ -34,8 +38,6 @@ def parseEmails(emails):
     parsedEmails = []
 
     for mail in emails:
-
-        # print(mail)
 
         if ".DS_Store" in mail: 
             continue
@@ -82,15 +84,21 @@ def parseEmails(emails):
                 cdispo = str(part.get('Content-Disposition'))
                 if ctype == 'text/plain' and 'attachment' not in cdispo:
                     try:
-                        body = part.get_payload(decode=True).decode(charset)
+                        body += part.get_payload(decode=True).decode(charset)
                     except:
-                        body = part.get_payload(decode=True).decode(suplementarCharset)
+                        try:
+                            body += part.get_payload(decode=True).decode(suplementarCharset)
+                        except:
+                            body += message.get_payload(decode=True).decode(suplementarCharset)
                     break
         else:
             try:
-                body = message.get_payload(decode=True).decode(charset)
+                body += message.get_payload(decode=True).decode(charset)
             except:
-                body = message.get_payload(decode=True).decode(suplementarCharset)
+                try:
+                    body += message.get_payload(decode=True).decode(suplementarCharset)
+                except:
+                    body += message.get_payload(decode=True).decode(suplementarCharset)
 
         ## we do not care about HTML things
         text_maker = html2text.HTML2Text()
@@ -157,14 +165,26 @@ def validate(hamList, spamList):
 def trainData():
 
     hamEmailsFiles = getAllEmails('email_database/ham/')
+    # hamEmailsFiles = random.sample(hamEmailsFiles, 3000)
     parsedHamEmails = parseEmails(hamEmailsFiles)
     hamList = prepareForBoyson(parsedHamEmails, "ham")
 
+    # otherHamEmailsFiles = getAllEmails('email_database/other_ham/')
+    # parsedOtherHamEmails = parseEmails(otherHamEmailsFiles)
+    # otherHamList = prepareForBoyson(parsedOtherHamEmails, "ham")
+
+    # hamList = hamList + otherHamList
+
     spamEmailsFiles = getAllEmails('email_database/spam/')
+    # spamEmailsFiles = random.sample(spamEmailsFiles, 1000)
     parsedSpamEmails = parseEmails(spamEmailsFiles)
     spamList = prepareForBoyson(parsedSpamEmails, "spam")
 
-    # validate(hamList, spamList)
+    # otherSpamEmailsFiles = getAllEmails('email_database/other_spam/')
+    # parsedOtherSpamEmails = parseEmails(otherSpamEmailsFiles)
+    # otherSpamList = prepareForBoyson(parsedOtherSpamEmails, "spam")
+
+    # spamList = spamList + otherSpamList
 
     trainingSet = hamList + spamList
 
@@ -185,7 +205,9 @@ def categorize(probabilities):
 
 def main():
 
-    # trainData()
+    trainData()
+
+    exit(0)
 
     emailsFiles = emailsToAnalyze()
 
