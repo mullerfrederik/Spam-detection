@@ -14,12 +14,13 @@ import random
 from nltk import NaiveBayesClassifier
 from email.header import decode_header
 import pickle
+import gzip
 
 def emailsToAnalyze():
 
     emails = []
 
-    if len (sys.argv) != 2:
+    if len (sys.argv) < 2:
         print ('Usage: ./antispam email.eml email2.eml email3.eml email4.eml"')
         sys.exit(1)
 
@@ -34,7 +35,7 @@ def parseEmails(emails):
 
     for mail in emails:
 
-        print(mail)
+        # print(mail)
 
         if ".DS_Store" in mail: 
             continue
@@ -91,7 +92,7 @@ def parseEmails(emails):
             except:
                 body = message.get_payload(decode=True).decode(suplementarCharset)
 
-        # move to normalize?
+        ## we do not care about HTML things
         text_maker = html2text.HTML2Text()
         text_maker.single_line_break = True
         text_maker.ignore_links = True
@@ -142,6 +143,16 @@ def prepareForBoyson(emails, string):
 
     return emailList
 
+def validate(hamList, spamList):
+    mixedList = hamList + spamList
+    random.shuffle(mixedList)
+    trainingPart = int(len(mixedList) * 0.8)
+    trainingSet = mixedList[:trainingPart]
+    testSet = mixedList[trainingPart:]
+    classifier = NaiveBayesClassifier.train(trainingSet)
+    accuracy = nltk.classify.util.accuracy(classifier, testSet)
+    print("accuracy: " + str(accuracy * 100) + "%")
+    classifier.show_most_informative_features(20)
 
 def trainData():
 
@@ -149,42 +160,25 @@ def trainData():
     parsedHamEmails = parseEmails(hamEmailsFiles)
     hamList = prepareForBoyson(parsedHamEmails, "ham")
 
-
     spamEmailsFiles = getAllEmails('email_database/spam/')
     parsedSpamEmails = parseEmails(spamEmailsFiles)
     spamList = prepareForBoyson(parsedSpamEmails, "spam")
-    combinedList = hamList + spamList
 
-    # random.shuffle(combinedList)
+    # validate(hamList, spamList)
 
-
-    # trainingPart = int(len(combinedList) * .7)
-
-    trainingSet = combinedList # trainingSet = combinedList[:trainingPart]
-
-    # testSet = combinedList[trainingPart:]
-
-    # print (len(trainingSet))
-    # print (len(testSet))
+    trainingSet = hamList + spamList
 
     classifier = NaiveBayesClassifier.train(trainingSet)
 
-    # accuracy = nltk.classify.util.accuracy(classifier, testSet)
-
-    # print("Accuracy is: ", accuracy * 100)
-
-    classifier.show_most_informative_features(20)
-
-    model = open('my_classifier.pickle', 'wb')
-    pickle.dump(classifier, model)
-    model.close()
+    classifierFile = gzip.open('classifier.gzip', 'wb')
+    pickle.dump(classifier, classifierFile)
+    classifierFile.close()
 
 def categorize(probabilities):
-    print(probabilities)
-    print(probabilities.samples())
-    print('ham: ' + str(probabilities.prob('ham')))
-    print('spam: ' + str(probabilities.prob('spam')))
-    if probabilities.prob('spam') > 0.95:
+    # print(probabilities.samples())
+    # print('ham: ' + str(probabilities.prob('ham')))
+    # print('spam: ' + str(probabilities.prob('spam')))
+    if probabilities.prob('spam') > 0.8:
         return 'SPAM'
     else:
         return 'OK'
@@ -193,16 +187,13 @@ def main():
 
     # trainData()
 
-    # exit(0)
-
-    model = open('my_classifier.pickle', 'rb')
-    classifier = pickle.load(model)
-    model.close()
-    
     emailsFiles = emailsToAnalyze()
 
     parsedEmails = parseEmails(emailsFiles)
 
+    classifierFile = gzip.open('classifier.gzip', 'rb')
+    classifier = pickle.load(classifierFile)
+    classifierFile.close()
 
     for parsedEmail in parsedEmails:
 
@@ -211,7 +202,7 @@ def main():
                 print(mailLocation + " - FAIL")
                 continue
             words = word_tokenize(normalize(message))
-            print(words)
+            # print(words)
             features = createWordFeatures(words)
             print(mailLocation + " - " + categorize(classifier.prob_classify(features)))
 
