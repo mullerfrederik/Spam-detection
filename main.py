@@ -89,7 +89,7 @@ def parseEmails(emails):
                         try:
                             body += part.get_payload(decode=True).decode(suplementarCharset)
                         except:
-                            body += message.get_payload(decode=True).decode(suplementarCharset)
+                            body += part.get_payload()
                     break
         else:
             try:
@@ -98,7 +98,7 @@ def parseEmails(emails):
                 try:
                     body += message.get_payload(decode=True).decode(suplementarCharset)
                 except:
-                    body += message.get_payload(decode=True).decode(suplementarCharset)
+                    body += message.get_payload()
 
         ## we do not care about HTML things
         text_maker = html2text.HTML2Text()
@@ -165,26 +165,14 @@ def validate(hamList, spamList):
 def trainData():
 
     hamEmailsFiles = getAllEmails('email_database/ham/')
-    # hamEmailsFiles = random.sample(hamEmailsFiles, 3000)
     parsedHamEmails = parseEmails(hamEmailsFiles)
     hamList = prepareForBoyson(parsedHamEmails, "ham")
 
-    # otherHamEmailsFiles = getAllEmails('email_database/other_ham/')
-    # parsedOtherHamEmails = parseEmails(otherHamEmailsFiles)
-    # otherHamList = prepareForBoyson(parsedOtherHamEmails, "ham")
-
-    # hamList = hamList + otherHamList
-
     spamEmailsFiles = getAllEmails('email_database/spam/')
-    # spamEmailsFiles = random.sample(spamEmailsFiles, 1000)
     parsedSpamEmails = parseEmails(spamEmailsFiles)
     spamList = prepareForBoyson(parsedSpamEmails, "spam")
 
-    # otherSpamEmailsFiles = getAllEmails('email_database/other_spam/')
-    # parsedOtherSpamEmails = parseEmails(otherSpamEmailsFiles)
-    # otherSpamList = prepareForBoyson(parsedOtherSpamEmails, "spam")
-
-    # spamList = spamList + otherSpamList
+    # validate(hamList, spamList)
 
     trainingSet = hamList + spamList
 
@@ -195,9 +183,6 @@ def trainData():
     classifierFile.close()
 
 def categorize(probabilities):
-    # print(probabilities.samples())
-    # print('ham: ' + str(probabilities.prob('ham')))
-    # print('spam: ' + str(probabilities.prob('spam')))
     if probabilities.prob('spam') > 0.8:
         return 'SPAM'
     else:
@@ -206,7 +191,6 @@ def categorize(probabilities):
 def main():
 
     trainData()
-
     exit(0)
 
     emailsFiles = emailsToAnalyze()
@@ -224,7 +208,6 @@ def main():
                 print(mailLocation + " - FAIL")
                 continue
             words = word_tokenize(normalize(message))
-            # print(words)
             features = createWordFeatures(words)
             print(mailLocation + " - " + categorize(classifier.prob_classify(features)))
 
