@@ -5,8 +5,6 @@
 # Antispam -- machine learning
 
 import sys
-import simplejson as json
-import datetime
 import email
 import html2text
 import os
@@ -113,9 +111,9 @@ def parseEmails(emails):
 
     return parsedEmails
 
-def createWordFeatures(words):
-    my_dict = dict( [ (word, True) for word in words] )
-    return my_dict
+def createFeatures(message):
+    newDict = dict([(word, True) for word in message] )
+    return newDict
 
 def getAllEmails(directory):
     filesPath = []
@@ -132,7 +130,7 @@ def normalize(string):
     normalized = re.sub(r'[?\n\.!,():"]', '', normalized)
     normalized = re.sub(r'\b[\w\-.]+?@\w+?\.\w{2,4}\b', 'emailaddr', normalized)
     normalized = re.sub(r'(http[s]?\S+)|(\w+\.[A-Za-z]{2,4}\S*)', 'httpaddr', normalized)
-    normalized = re.sub(r'£|\$', 'moneysymb', normalized)
+    normalized = re.sub(r'£|\$|€', 'moneysymb', normalized)
     normalized = re.sub(r'\b(\+\d{1,2}\s)?\d?[\-(.]?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b', 'phonenumbr', normalized)
     normalized = re.sub(r'\d+(\.\d+)?', 'numbr', normalized)
     normalized = re.sub(r'\s+', ' ', normalized)
@@ -147,7 +145,7 @@ def prepareForBoyson(emails, string):
     for mail in emails:
         for mailLocation, message in mail.items():
             words = word_tokenize(normalize(message))
-            emailList.append((createWordFeatures(words), string))
+            emailList.append((createFeatures(words), string))
 
     return emailList
 
@@ -190,8 +188,7 @@ def categorize(probabilities):
 
 def main():
 
-    trainData()
-    exit(0)
+    # trainData()
 
     emailsFiles = emailsToAnalyze()
 
@@ -208,7 +205,7 @@ def main():
                 print(mailLocation + " - FAIL")
                 continue
             words = word_tokenize(normalize(message))
-            features = createWordFeatures(words)
+            features = createFeatures(words)
             print(mailLocation + " - " + categorize(classifier.prob_classify(features)))
 
 
